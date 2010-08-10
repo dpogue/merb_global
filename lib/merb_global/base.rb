@@ -153,5 +153,9 @@ module Merb
               "wrong type of arguments - see documentation for details"
       end
     end
+
+    def n_(sing, plur, count)
+        _(sing, plur, :n => count)
+    end
   end
 end
