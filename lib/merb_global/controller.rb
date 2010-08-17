@@ -27,12 +27,31 @@ module Merb
     def self.language(&block)
       self._mg_locale = block
     end
+
     # Sets the language of block.
     #
     # The block should return language or nil if other method should be used
     # to determine the language
     def self.locale(&block)
       self._mg_locale = block
+    end
+
+    def partial_(template, opts={})
+        begin
+            t_loc = template.to_s + "_#{self._mg_locale}"
+            partial(t_loc, opts)
+        rescue TemplateNotFound
+            partial(template, opts)
+        end
+    end
+
+    def render_(thing = nil, opts = {})
+        begin
+            t_loc = thing.to_s + "_#{self._mg_locale}"
+            render(t_loc, opts)
+        rescue TemplateNotFound
+            render(thing, opts)
+        end
     end
   end
 end
